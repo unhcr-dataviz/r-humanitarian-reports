@@ -1,0 +1,191 @@
+---
+title: "R for Humanitarian Reporting"
+author: "Cédric Vidonne"
+date: today
+date-format: medium
+format: unhcr-revealjs
+embed-resources: true
+execute:
+  echo: true
+---
+
+<style>
+.reveal pre {
+  font-size: .35em
+}
+</style>
+
+## Agenda
+
+1. Why R for Humanitarian Reporting?
+1. Data Ingestion & Wrangling
+1. Data Visualization
+1. Reporting
+1. Q&A
+
+# Why R for Humanitarian Work? {.slide-blue}
+
+## What is R?
+
+::: {.r-fit-text}
+- **Free & Open Source** – No licensing fees, continuously evolving.
+- **Expandable with Packages** – 20,000+ packages for everything from stats to mapping.
+- **Active Community** – Millions of users, tutorials, Stack Overflow, RStudio Community.
+- **Tidyverse**: A Game Changer – A unified approach to data manipulation & visualization.
+- **ggplot2**: Beautiful, Flexible Charts – Uses the Grammar of Graphics for layered plots.
+- **RMarkdown & Quarto** – Automate reports, mix text, code, visuals, and tables.
+:::
+
+::: {.notes}
+Scripting language for stats so super agile with data
+Open source (free) with a really active community
+Functionality extended with packages
+:::
+
+## Product creation workflow
+
+![](img/normal-workflow.png){fig-align="center"}
+
+::: {.notes}
+Key Message: R enables automation, standardization, and reproducibility—saving time and ensuring consistent branding.
+
+The Problem:
+Reports are manual, time-consuming, and prone to errors
+Ensuring consistent branding across visuals is a challenge
+
+How R Solves This:
+Automates data collection, analysis, and visualization
+Produces publication-ready charts and maps
+Standardizes branding using unhcrthemes and unhcrdown
+
+The Flow:
+Data → Wrangle → Visualize → Report (Show a simple flowchart)
+:::
+
+
+## Workflow with R
+
+![](img/r-workflow.png){fig-align="center"}
+
+::: {.notes}
+Key Message: R enables automation, standardization, and reproducibility—saving time and ensuring consistent branding.
+
+The Problem:
+Reports are manual, time-consuming, and prone to errors
+Ensuring consistent branding across visuals is a challenge
+
+How R Solves This:
+Automates data collection, analysis, and visualization
+Produces publication-ready charts and maps
+Standardizes branding using unhcrthemes and unhcrdown
+
+The Flow:
+Data → Wrangle → Visualize → Report (Show a simple flowchart)
+:::
+
+# Data Ingestion & Wrangling {.slide-blue}
+
+## Getting data into R
+
+R can import data from **various sources**:
+
+- Local files: CSV, Excel, ...
+- Databases: SQL, GeoDB, ...
+- Online: APIs, Web scrapping, ...
+- R packages: `refugees`, `rnaturalearth`, ...
+- ...
+
+## Local file
+
+Example using a local CSV:
+
+:::: {.columns}
+
+::: {.column}
+
+```{r import-csv, results='hide'}
+library(tidyverse)
+
+sdn_pres <- 
+  readr::read_csv("data/sdn_presence.csv")
+
+head(sdn_pres)
+```
+
+:::
+
+::: {.column}
+
+```{r ref.label = 'import-csv', echo = FALSE}
+
+```
+
+:::
+
+::::
+
+## From API
+
+Example directly calling a file on HDX with `rhdx` package:
+
+:::: {.columns}
+
+::: {.column}
+
+```{r import-hdx, results='hide'}
+library(rhdx)
+
+sdn_displ <- 
+  rhdx::pull_dataset("unhcr-population-data-for-sdn") |>
+  rhdx::get_resource(1) |> 
+  rhdx::read_resource()
+
+head(sdn_displ)
+```
+
+:::
+
+::: {.column}
+
+```{r ref.label = 'import-hdx', echo = FALSE}
+
+```
+
+:::
+
+::::
+
+## In R Packages
+
+Example using data in the `refugees` package:
+
+:::: {.columns}
+
+::: {.column}
+
+```{r import-ref, results='hide'}
+library(refugees)
+
+wrl_displ <- 
+  refugees::population
+
+head(wrl_displ)
+```
+
+:::
+
+::: {.column}
+
+```{r ref.label = 'import-ref', echo = FALSE}
+
+```
+
+:::
+
+::::
+
+# Data Visualization {.slide-blue}
+
+# Reporting {.slide-blue}
+
+# Questions {.slide-blue}
