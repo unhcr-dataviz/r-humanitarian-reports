@@ -9,183 +9,129 @@ execute:
   echo: true
 ---
 
-<style>
-.reveal pre {
-  font-size: .35em
-}
-</style>
-
 ## Agenda
 
-1. Why R for Humanitarian Reporting?
+1. Why R?
 1. Data Ingestion & Wrangling
 1. Data Visualization
 1. Reporting
 1. Q&A
 
-# Why R for Humanitarian Work? {.slide-blue}
-
-## What is R?
-
-::: {.r-fit-text}
-- **Free & Open Source** – No licensing fees, continuously evolving.
-- **Expandable with Packages** – 20,000+ packages for everything from stats to mapping.
-- **Active Community** – Millions of users, tutorials, Stack Overflow, RStudio Community.
-- **Tidyverse**: A Game Changer – A unified approach to data manipulation & visualization.
-- **ggplot2**: Beautiful, Flexible Charts – Uses the Grammar of Graphics for layered plots.
-- **RMarkdown & Quarto** – Automate reports, mix text, code, visuals, and tables.
-:::
-
-::: {.notes}
-Scripting language for stats so super agile with data
-Open source (free) with a really active community
-Functionality extended with packages
-:::
+# Why R? {.slide-blue}
 
 ## Product creation workflow
 
 ![](img/normal-workflow.png){fig-align="center"}
 
-::: {.notes}
-Key Message: R enables automation, standardization, and reproducibility—saving time and ensuring consistent branding.
+## What is R & Its Ecosystem
 
-The Problem:
-Reports are manual, time-consuming, and prone to errors
-Ensuring consistent branding across visuals is a challenge
+::: {.r-fit-text}
 
-How R Solves This:
-Automates data collection, analysis, and visualization
-Produces publication-ready charts and maps
-Standardizes branding using unhcrthemes and unhcrdown
-
-The Flow:
-Data → Wrangle → Visualize → Report (Show a simple flowchart)
+- **Statistical programming language** designed for data analysis
+- **Free** and open-source software
+- **Extensible**: 20,000+ packages for specialized tasks
+- **tidyverse**: Modern data wrangling & visualization
+- **RMarkdown/Quarto**: Dynamic report generation
+- **Active community**: Extensive resources and support
+- **Humanitarian specific** packages: `rhdx`, `racled`, etc.
+    
 :::
-
 
 ## Workflow with R
 
 ![](img/r-workflow.png){fig-align="center"}
 
-::: {.notes}
-Key Message: R enables automation, standardization, and reproducibility—saving time and ensuring consistent branding.
-
-The Problem:
-Reports are manual, time-consuming, and prone to errors
-Ensuring consistent branding across visuals is a challenge
-
-How R Solves This:
-Automates data collection, analysis, and visualization
-Produces publication-ready charts and maps
-Standardizes branding using unhcrthemes and unhcrdown
-
-The Flow:
-Data → Wrangle → Visualize → Report (Show a simple flowchart)
-:::
-
 # Data Ingestion & Wrangling {.slide-blue}
 
 ## Getting data into R
 
-R can import data from **various sources**:
+Where Does Our Data Come From?
 
-- Local files: CSV, Excel, ...
-- Databases: SQL, GeoDB, ...
-- Online: APIs, Web scrapping, ...
-- R packages: `refugees`, `rnaturalearth`, ...
-- ...
+- **Local data** (spreadsheets, databases)
+- **External data** (APIs, HDX, ACLED)
+- **Geospatial data** (shapefiles, GeoJSON)
+- **R packages**: `refugees`, `rnaturalearth`, ...
 
-## Local file
+## Data Wrangling
 
-Example using a local CSV:
+Think of it as "Excel with superpowers"
 
-:::: {.columns}
+- Data Selection and Filtering
+- Data Transformation
+- Grouping and Summarization
+- Reproducibility—write once, update forever
+- Performance
 
-::: {.column}
-
-```{r import-csv, results='hide'}
-library(tidyverse)
-
-sdn_pres <- 
-  readr::read_csv("data/sdn_presence.csv")
-
-head(sdn_pres)
-```
-
-:::
-
-::: {.column}
-
-```{r ref.label = 'import-csv', echo = FALSE}
-
-```
-
-:::
-
-::::
-
-## From API
-
-Example directly calling a file on HDX with `rhdx` package:
-
-:::: {.columns}
-
-::: {.column}
-
-```{r import-hdx, results='hide'}
-library(rhdx)
-
-sdn_displ <- 
-  rhdx::pull_dataset("unhcr-population-data-for-sdn") |>
-  rhdx::get_resource(1) |> 
-  rhdx::read_resource()
-
-head(sdn_displ)
-```
-
-:::
-
-::: {.column}
-
-```{r ref.label = 'import-hdx', echo = FALSE}
-
-```
-
-:::
-
-::::
-
-## In R Packages
-
-Example using data in the `refugees` package:
-
-:::: {.columns}
-
-::: {.column}
-
-```{r import-ref, results='hide'}
-library(refugees)
-
-wrl_displ <- 
-  refugees::population
-
-head(wrl_displ)
-```
-
-:::
-
-::: {.column}
-
-```{r ref.label = 'import-ref', echo = FALSE}
-
-```
-
-:::
-
-::::
+# Example {background-color="#18375F"}
 
 # Data Visualization {.slide-blue}
 
+## ggplot2
+
+::: {.r-fit-text}
+- [Grammar of Graphics](https://link.springer.com/chapter/10.1007/978-3-642-21551-3_13) by Leland Irving → Build plots layer by layer
+- Consistent & flexible
+- Can also be extended with packages
+:::
+
+![](img/struct_ggplot.png){fig-align="center"}
+
+## unhcrthemes
+
+::: {.r-fit-text}
+
+1. **Branded** `ggplot2` theme
+
+2. A series of color palette for:
+
+    - A **categorical palette** for UNHCR main data visualization colors
+
+    - A **categorical palette** for people of concern to UNHCR categories
+
+    - A **categorical palette** for geographical regional divisions of UNHCR
+
+    - Six **sequential color palettes** for all the main data visualization colors
+
+    - Two recommended **diverging color palette**
+    
+3. Available on **CRAN**
+
+:::
+
+# Example {background-color="#18375F"}
+
 # Reporting {.slide-blue}
+
+## RMarkdown
+
+::: {.r-fit-text}
+
+- A single document combining text, code, and visuals
+- Update data → Report updates automatically
+- Export to Word, PDF, HTML, and more.
+
+:::
+
+## unhcrdown
+
+::: {.r-fit-text}
+
+- A collection of professional templates following UNHCR brand guidelines
+- Ready-to-use formats for reports, presentations, and websites
+- Easy-to-use functions that work seamlessly with R Markdown
+- Consistent styling across all document types
+
+:::
+
+# Example {background-color="#18375F"}
+
+##  UNHCR Tools
+
+* [**unhcrthemes**](https://github.com/unhcr-dataviz/unhcrthemes): UNHCR branded ggplot2 theme and color palettes
+* [**unhcrdown**](https://github.com/unhcr-dataviz/unhcrdown): UNHCR templates for R Markdown
+* [**refugees**](https://github.com/PopulationStatistics/refugees): Access to [UNHCR Refugee Data Finder](https://www.unhcr.org/refugee-statistics) API
+* [**quarto-html-unhcr**](https://github.com/unhcr-dataviz/quarto-html-unhcr): Quarto extension for UNHCR branded HTML documents
+* [**quarto-revealjs-unhcr**](https://github.com/unhcr-dataviz/quarto-revealjs-unhcr): Quarto extension for UNHCR branded presentations
+* [**Data Visualization Platform**](https://dataviz.unhcr.org/): UNHCR's data visualization guidelines and tools
 
 # Questions {.slide-blue}

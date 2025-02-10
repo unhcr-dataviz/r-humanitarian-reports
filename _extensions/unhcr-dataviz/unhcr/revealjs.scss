@@ -196,3 +196,8 @@ $presentation-h1-font-size: 2.2em !default;
 .slide-blue {
   background-color: $unhcr-blue !important;
 }
+
+// fix code chunk size 
+.reveal pre {
+  font-size: .35em
+}
